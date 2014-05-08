@@ -10,9 +10,17 @@
 	<body>
 		<section id="client">
 			<h1>Location Stalker Client</h1>
-			<p>Welcome to the Location Stalker Client. Please enter below the target url (e.g. localhost:1337/map/<span class='code'>[:collection id]</span>).</p>
+			<p>Welcome to the Location Stalker Client. Please enter below the target url (e.g. localhost:1337/map/<span class='code'>[:collection id]</span>). After that is done, generate or create a session.</p>
 			<input type="text" name="url" placeholder="Target URL" id="target" />
-			<input type="text" name="session" placeholder="Session name" id="session" value="TestClient" />
+			<div id="create-session">
+				<h2>Create session</h2>
+				<button type="button" class="initialize">Generate session</button><br />
+				<from action="#" method="post">
+					<input type="text" name="session-name" placeholder="Session name" id="session-name" />
+					<input type="text" name="session-key" placeholder="Session key" id="session-key" />
+					<input type="submit" value="Create" />
+				</from>
+			</div>
 			<div id="single-position">
 				<h2>Send single position</h2>
 				<button type="button" class="initialize">Set GeoLocation data</button>

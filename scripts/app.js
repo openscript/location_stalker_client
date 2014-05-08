@@ -28,6 +28,7 @@ $('#single-position form').submit(function() {
 	data['longitude'] = $(this).children('input[name="longitude"]').val();
 	data['altitude'] = $(this).children('input[name="altitude"]').val();
 	data['accuracy'] = $(this).children('input[name="accuracy"]').val();
+	data['session'] = $('#target').val();
 	sendData(data);
 
 	return false;
@@ -51,7 +52,7 @@ var addLog = function(message) {
 
 var setLoc = function(target) {
 	if('geolocation' in navigator) {
-		addLog('Ask browser for geolocation..');
+		addLog('Asking browser for geolocation..');
 		navigator.geolocation.getCurrentPosition(function(res) {
 			$(target + ' input[name="latitude"]').val(res.coords.latitude);
 			$(target + ' input[name="longitude"]').val(res.coords.longitude);
