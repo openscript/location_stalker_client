@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Location Stalker Client</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<script type="text/javascript" src="./scripts/modernizr.js"></script>
+		<link rel="shortcut icon" href="./favicon.ico">
+		<link href="./styles/app.css" rel="stylesheet" type="text/css">
+	</head>
+	<body>
+		<section id="client">
+			<h1>Location Stalker Client</h1>
+			<p>Welcome to the Location Stalker Client</p>
+			<h2>Send single position</h2>
+			<form action="#" method="post">
+				<input type="text" name="latitude" placeholder="Latitude" />
+				<input type="text" name="longitude" placeholder="Longitude" />
+				<input type="text" name="altitude" placeholder="Altitude" />
+				<input type="text" name="accuracy" placeholder="Accuracy" />
+				<input type="submit" value="Send" />
+			</form>
+
+			<h2>Send changing positions with an interval</h2>
+		</section>
+		<section id="log">
+		</section>
+		<footer>
+			<p>This is an open source project and initiated by Robin Bühler.</p>
+		</footer>
+
+		<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="./scripts/app.js"></script>
+	</body>
+</html>
