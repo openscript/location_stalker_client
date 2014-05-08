@@ -24,3 +24,15 @@ h1 {
 .code {
 	font-family: monospace;
 }
+
+.hide {
+	display: none;
+}
+
+.start {
+	background-color: green;
+}
+
+.stop {
+	background-color: red;
+}
