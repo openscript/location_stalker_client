@@ -5,6 +5,9 @@ This is a demonstration application, which shows how [Location Stalker](https://
 1. Clone this git repository
 2. Open `index.html` with a modern browser
 
+## Issues
+ - Google Chrome dosent ask for GeoLocation permission and blocks the position requests by default, if the request origin is a local file (`file://...`). Maybe you should deliver the page via a web server.
+
 ## Copyright
 This projected is licensed under the terms of the MIT license. Please consult the license file for further information.
 

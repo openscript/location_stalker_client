@@ -15,3 +15,12 @@ h1 {
 	font-size: 1.8em;
 	margin-bottom: 0.2em;
 }
+
+#log .messages{
+	max-height: 400px;
+	overflow-y: scroll;
+}
+
+.code {
+	font-family: monospace;
+}

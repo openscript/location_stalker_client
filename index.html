@@ -4,32 +4,53 @@
 		<title>Location Stalker Client</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<script type="text/javascript" src="./scripts/modernizr.js"></script>
 		<link rel="shortcut icon" href="./favicon.ico">
 		<link href="./styles/app.css" rel="stylesheet" type="text/css">
 	</head>
 	<body>
 		<section id="client">
 			<h1>Location Stalker Client</h1>
-			<p>Welcome to the Location Stalker Client</p>
-			<h2>Send single position</h2>
-			<form action="#" method="post">
-				<input type="text" name="latitude" placeholder="Latitude" />
-				<input type="text" name="longitude" placeholder="Longitude" />
-				<input type="text" name="altitude" placeholder="Altitude" />
-				<input type="text" name="accuracy" placeholder="Accuracy" />
-				<input type="submit" value="Send" />
-			</form>
-
-			<h2>Send changing positions with an interval</h2>
+			<p>Welcome to the Location Stalker Client. Please enter below the target url (e.g. localhost:1337/map/<span class='code'>[:collection id]</span>).</p>
+			<input type="text" name="url" placeholder="Target URL" id="target" />
+			<input type="text" name="session" placeholder="Session name" id="session" value="TestClient" />
+			<div id="single-position">
+				<h2>Send single position</h2>
+				<button type="button" class="initialize">Set GeoLocation data</button>
+				<form action="#" method="post">
+					<input type="text" name="latitude" placeholder="Latitude" required />
+					<input type="text" name="longitude" placeholder="Longitude" required />
+					<input type="text" name="altitude" placeholder="Altitude" />
+					<input type="text" name="accuracy" placeholder="Accuracy" />
+					<input type="submit" value="Send" />
+				</form>
+			</div>
+			<div id="changin-positions">
+				<h2>Send changing positions with an interval</h2>
+				<button type="button" class="initialize">Set initial GeoLocation data</button>
+				<form action="#" method="post">
+					<input type="text" name="latitude" placeholder="Latitude" />
+					<input type="text" name="latitude-delta" placeholder="Latitude Delta" /><br />
+					<input type="text" name="longitude" placeholder="Longitude" />
+					<input type="text" name="longitude-delta" placeholder="Longitude Delta" /><br />
+					<input type="text" name="altitude" placeholder="Altitude" />
+					<input type="text" name="accuracy" placeholder="Accuracy" />
+					<input type="number" min="0.5" max="10" step="0.5" value="1" name="interval" placeholder="Interval" />
+					<input type="submit" value="Start" />
+				</form>
+			</div>
 		</section>
 		<section id="log">
+			<h2>Log</h2>
+			<button type="button" class="reset">Reset</button>
+			<ul class="messages">
+			</ul>
 		</section>
 		<footer>
 			<p>This is an open source project and initiated by Robin Bühler.</p>
 		</footer>
 
-		<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="http://cdn.jsdelivr.net/jquery/2.1.1/jquery.min.js"></script>
+		<script type="text/javascript" src="./scripts/jquery.formatDateTime.min.js"></script>
 		<script type="text/javascript" src="./scripts/app.js"></script>
 	</body>
 </html>
