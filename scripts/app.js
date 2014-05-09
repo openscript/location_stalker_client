@@ -10,8 +10,24 @@ $(document).ready(function() {
 	addLog('Location Stalker Client initialized');
 });
 
+$('#target').change(function() {
+	if(/\w+/.exec($(this).val()).pop() != 'http') {
+		$(this).val('http://' + $(this).val());
+	};
+});
+
 $('#log .reset').click(function() {
 	$('#log .messages').empty();
+});
+
+$('#create-session .initialize').click(function() {
+	$.ajax({
+		type: 'GET',
+		url: $('#target').val() + '/session/generate',
+		dataType: 'json'
+	}).done(function(res) {
+		addLog('Set session:' + res);
+	});
 });
 
 $('#single-position .initialize').click(function() {
