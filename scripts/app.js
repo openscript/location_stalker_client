@@ -18,6 +18,10 @@ $('#target').change(function() {
 	saveToSession();
 });
 
+$('#collection-title').change(function() {
+	saveToSession();
+});
+
 $('#log .reset').click(function() {
 	$('#log .messages').empty();
 });
@@ -25,13 +29,17 @@ $('#log .reset').click(function() {
 $('#create-session .initialize').click(function() {
 	if($('#target').val()){
 		$.ajax({
-			type: 'GET',
+			type: 'POST',
 			url: $('#target').val() + '/session/generate',
+			data: {
+				'collection-title': $('#collection-title').val()
+			},
 			dataType: 'json'
 		}).done(function(res) {
 			addLog('Set session:' + JSON.stringify(res));
 			$('#create-session input[name="session-title"]').val(res.title);
 			$('#create-session input[name="session-key"]').val(res.key);
+			$('#create-session input[name="collection-id"]').val(res.collection);
 		}).fail(function(err) {
 			addLog('Error occured during session generation.');
 		});
@@ -51,6 +59,7 @@ $('#create-session form').submit(function() {
 
 	data['title'] = $(this).children('input[name="session-title"]').val();
 	data['key'] = $(this).children('input[name="session-key"]').val();
+	data['collection'] = $(this).children('input[name="collection-id"]').val();
 	sendData(data, '/session');
 
 	return false;
@@ -63,8 +72,8 @@ $('#single-position form').submit(function() {
 	data['longitude'] = $(this).children('input[name="longitude"]').val();
 	data['altitude'] = $(this).children('input[name="altitude"]').val();
 	data['accuracy'] = $(this).children('input[name="accuracy"]').val();
-	data['session'] = $('#create-session input[name="session-key"]').val();
-	sendData(data, '/map');
+	data['session-key'] = $('#create-session input[name="session-key"]').val();
+	sendData(data, '/map/' + data['session-key']);
 
 	return false;
 });
@@ -102,6 +111,8 @@ var setLoc = function(target) {
 };
 
 var sendData = function(data, route) {
+	
+	
 	$.ajax({
 		type: 'POST',
 		url: $('#target').val() + route,
@@ -110,18 +121,22 @@ var sendData = function(data, route) {
 	}).done(function(res) {
 		addLog('Data sent: ' + JSON.stringify(data));
 		addLog('Received: ' + JSON.stringify(res));
+	}).fail(function(err) {
+		addLog('Couldn\'t send data:' + JSON.stringify(err));
 	});
 }
 
 var saveToSession = function() {
 	if(isStorage()) {
 		sessionStorage.setItem('target', $('#target').val());
+		sessionStorage.setItem('collection-title', $('#collection-title').val());
 	}
 }
 
 var readFromSession = function() {
 	if(isStorage()) {
 		$('#target').val(sessionStorage.getItem('target'));
+		$('#collection-title').val(sessionStorage.getItem('collection-title'));
 	}
 }
 

@@ -12,12 +12,14 @@
 			<h1>Location Stalker Client</h1>
 			<p>Welcome to the Location Stalker Client. Please enter below the target url (e.g. localhost:1337). After that is done, generate or create a session.</p>
 			<input type="url" name="url" placeholder="Target URL" id="target" />
+			<input type="text" name="collection" placeholder="Collection title" id="collection-title" />
 			<div id="create-session">
 				<h2>Create session</h2>
 				<button type="button" class="initialize">Generate session</button><br />
 				<form action="#" method="post">
 					<input type="text" name="session-title" placeholder="Session title" id="session-title" required />
 					<input type="text" name="session-key" placeholder="Session key" id="session-key" required />
+					<input type="text" name="collection-id" placeholder="Collection id" id="collection-id" required />
 					<input type="submit" value="Create" />
 				</form>
 			</div>
