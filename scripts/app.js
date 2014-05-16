@@ -72,8 +72,7 @@ $('#single-position form').submit(function() {
 	data['longitude'] = $(this).children('input[name="longitude"]').val();
 	data['altitude'] = $(this).children('input[name="altitude"]').val();
 	data['accuracy'] = $(this).children('input[name="accuracy"]').val();
-	data['session-key'] = $('#create-session input[name="session-key"]').val();
-	sendData(data, '/map/' + data['session-key']);
+	sendData(data, '/map/' + $('#create-session input[name="session-key"]').val());
 
 	return false;
 });
@@ -111,17 +110,16 @@ var setLoc = function(target) {
 };
 
 var sendData = function(data, route) {
-	
-	
 	$.ajax({
 		type: 'POST',
 		url: $('#target').val() + route,
-		data: data,
+		data: cleanObject(data),
 		dataType: 'json'
 	}).done(function(res) {
 		addLog('Data sent: ' + JSON.stringify(data));
 		addLog('Received: ' + JSON.stringify(res));
 	}).fail(function(err) {
+		addLog('Data: ' + JSON.stringify(data));
 		addLog('Couldn\'t send data:' + JSON.stringify(err));
 	});
 }
@@ -155,5 +153,13 @@ var isStorage = function() {
 	} else {
 		addLog('Storage is not supported by browser.');
 		return false;
+	}
+}
+
+var cleanObject = function(target) {
+	for(var index in target) {
+		if(target[index] === null || target[index] === undefined || target[index] === "") {
+			delete target[index];
+		}
 	}
 }
