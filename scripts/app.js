@@ -5,6 +5,8 @@ var opts = {
 	maximumAge: 0
 };
 
+var interval = 0;
+
 // events
 $(document).ready(function() {
 	readFromSession();
@@ -81,9 +83,23 @@ $('#changing-positions form').submit(function() {
 	if($(this).children('.stop').hasClass('hide')){
 		$(this).children('.start').addClass('hide');
 		$(this).children('.stop').removeClass('hide');
+		$(this).children('input[name="latitude"]').prop('disabled', true);
+		$(this).children('input[name="latitude-delta"]').prop('disabled', true);
+		$(this).children('input[name="longitude"]').prop('disabled', true);
+		$(this).children('input[name="longitude-delta"]').prop('disabled', true);
+		$(this).children('input[name="altitude"]').prop('disabled', true);
+		$(this).children('input[name="accuracy"]').prop('disabled', true);
+		interval = window.setInterval(newPos, $('#changing-positions input[name="interval"]').val()*1000, '#changing-positions');
 	} else {
 		$(this).children('.start').removeClass('hide');
 		$(this).children('.stop').addClass('hide');
+		$(this).children('input[name="latitude"]').prop('disabled', false);
+		$(this).children('input[name="latitude-delta"]').prop('disabled', false);
+		$(this).children('input[name="longitude"]').prop('disabled', false);
+		$(this).children('input[name="longitude-delta"]').prop('disabled', false);
+		$(this).children('input[name="altitude"]').prop('disabled', false);
+		$(this).children('input[name="accuracy"]').prop('disabled', false);
+		window.clearInterval(interval);
 	}
 
 	return false;
@@ -93,6 +109,26 @@ $('#changing-positions form').submit(function() {
 var addLog = function(message) {
 	$('#log .messages').prepend($('<li>').text('[' + $.formatDateTime('dd.mm.y hh:ii:ss', new Date()) + '] ~ ' + message));
 };
+
+var newPos = function(target) {
+	var data = {};
+
+	addLog('Sending new position...');
+
+	data['latitude'] = $(target + ' input[name="latitude"]').val();
+	data['longitude'] = $(target + ' input[name="longitude"]').val();
+	data['altitude'] = $(target + ' input[name="altitude"]').val();
+	data['accuracy'] = $(target + ' input[name="accuracy"]').val();
+	sendData(data, '/map/' + $('#create-session input[name="session-key"]').val());
+
+	var lat = $(target + ' input[name="latitude"]').val();
+	var latDlt = $(target + ' input[name="latitude-delta"]').val();
+	$(target + ' input[name="latitude"]').val((parseFloat(lat) + parseFloat(latDlt)).toFixed(8));
+
+	var lon = $(target + ' input[name="longitude"]').val();
+	var lonDlt = $(target + ' input[name="longitude-delta"]').val();
+	$(target + ' input[name="longitude"]').val((parseFloat(lon) + parseFloat(lonDlt)).toFixed(8));
+}
 
 var setLoc = function(target) {
 	if(isGeolocation()) {
@@ -162,4 +198,5 @@ var cleanObject = function(target) {
 			delete target[index];
 		}
 	}
+	return target;
 }
